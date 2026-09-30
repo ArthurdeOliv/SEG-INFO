@@ -1,6 +1,6 @@
 package ads.seg;
 
-public class InvalidLoginException extends RuntimeException {
+public class InvalidLoginException extends Exception {
     public InvalidLoginException(String message) {
         super(message);
     }

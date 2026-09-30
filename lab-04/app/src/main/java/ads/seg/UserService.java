@@ -20,18 +20,35 @@ package ads.seg;
 
 public class UserService {
 
-    private UserRepository userRepository = new InMemory();
+    private UserRepository repository = new InMemory();
+    private String hashAlg;
 
-    public void register() throws UserAlreadyExistsException {
-        
+    public UserService(UserRepository db, String hashAlg) {
+        this.repository = db;
+        this.hashAlg = "BCrypt";
     }
 
-    public void updatePassword() throws UserNotFoundException, InvalidPasswordException {
-       
+    public boolean register(String login, String password) throws UserAlreadyExistsException{
+        if (repository.findByLogin(login) != null) {
+            throw new UserAlreadyExistsException("Usuario em uso, tente novamente!");
+        }
+        return false;
     }
 
-    public void authenticate() throws InvalidLoginException {
-     
+    public boolean updatePassword(String login, String currentP, String newP) throws UserNotFoundException, InvalidPasswordException {
+
+        if(repository.findByLogin(login) == null){
+            throw new UserNotFoundException("Usuario nao encontrado");
+        }
+
+        repository.update(new User(login, newP));
+        return true;
+    }
+
+    public boolean authenticate(String login, String password) throws InvalidLoginException {
+
+
+        return false;
     }
 
 }

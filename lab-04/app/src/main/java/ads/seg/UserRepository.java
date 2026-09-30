@@ -19,10 +19,10 @@ package ads.seg;
 
 public interface UserRepository {
 
-    void save(User user);
+    public boolean save(User user);
 
-    void update(User user);
+    public boolean update(User user);
 
-    User findByLogin(String login);
+    public User findByLogin(String login);
 
 }
