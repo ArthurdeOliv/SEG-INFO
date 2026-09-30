@@ -3,9 +3,6 @@ package ads.seg;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Implementação de UserRepository que guarda os usuários em um Map em memória.
- */
 public class InMemory implements UserRepository {
 
     private final Map<String, User> users = new HashMap<>();

@@ -20,6 +20,18 @@ package ads.seg;
 
 public class UserService {
 
-    private UserRepository userService = new InMemory();
+    private UserRepository userRepository = new InMemory();
+
+    public void register() throws UserAlreadyExistsException {
+        
+    }
+
+    public void updatePassword() throws UserNotFoundException, InvalidPasswordException {
+       
+    }
+
+    public void authenticate() throws InvalidLoginException {
+     
+    }
 
 }
