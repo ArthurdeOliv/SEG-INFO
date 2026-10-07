@@ -26,11 +26,21 @@ public class UserService {
     public UserService(UserRepository db, String hashAlg) {
         this.repository = db;
         this.hashAlg = "BCrypt";
+        if (hashAlg.equalsIgnoreCase("PBKDF2")){
+            this.hashAlg = hashAlg;
+        }
     }
+
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+        this.hashAlg = "BCrypt";
+    }
+
+
 
     public boolean register(String login, String password) throws UserAlreadyExistsException{
         if (repository.findByLogin(login) != null) {
-            throw new UserAlreadyExistsException("Usuario em uso, tente novamente!");
+            throw new UserAlreadyExistsException("Usuario em uso!!!");
         }
         return repository.save(new User(login, password));
     }
@@ -42,7 +52,7 @@ public class UserService {
         }
 
         if(!repository.findByLogin(login).getPassword().equals(currentP)){
-            throw new InvalidPasswordException("Senha atual incorreta");
+            throw new InvalidPasswordException("Senha incorreta");
         }
 
         return repository.update(new User(login, newP));

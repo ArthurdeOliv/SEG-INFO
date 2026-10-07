@@ -21,7 +21,7 @@ public abstract class PasswordHashing {
      * @return array de bytes da senha
      * @throws CharacterCodingException caso ocorra um erro de codificação
      */
-    private static byte[] convertCharToByte(char[] password) {
+    public static byte[] convertCharToByte(char[] password) {
         byte[] bytePassword = new byte[0];
         try {
             CharsetEncoder encoder = PasswordHashing.charset.newEncoder();
