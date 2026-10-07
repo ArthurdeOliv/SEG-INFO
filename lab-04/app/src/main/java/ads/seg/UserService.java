@@ -32,7 +32,7 @@ public class UserService {
         if (repository.findByLogin(login) != null) {
             throw new UserAlreadyExistsException("Usuario em uso, tente novamente!");
         }
-        return false;
+        return repository.save(new User(login, password));
     }
 
     public boolean updatePassword(String login, String currentP, String newP) throws UserNotFoundException, InvalidPasswordException {
@@ -41,14 +41,20 @@ public class UserService {
             throw new UserNotFoundException("Usuario nao encontrado");
         }
 
-        repository.update(new User(login, newP));
-        return true;
+        if(!repository.findByLogin(login).getPassword().equals(currentP)){
+            throw new InvalidPasswordException("Senha atual incorreta");
+        }
+
+        return repository.update(new User(login, newP));
     }
 
     public boolean authenticate(String login, String password) throws InvalidLoginException {
 
+        if(repository.findByLogin(login) == null || !repository.findByLogin(login).getPassword().equals(password)){
+            throw new InvalidLoginException("Login ou senha invalidos");
+        }
 
-        return false;
+        return true;
     }
 
 }
